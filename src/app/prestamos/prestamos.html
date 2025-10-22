@@ -1,0 +1,35 @@
+<section class="panel">
+  <h2>Gestión de Préstamos</h2>
+
+  <form class="formulario" (submit)="registrarPrestamo()">
+    <input type="text" placeholder="Usuario (RUT o Nombre)" [(ngModel)]="nuevoPrestamo.usuario" name="usuario" required />
+    <input type="text" placeholder="Libro (Título)" [(ngModel)]="nuevoPrestamo.libro" name="libro" required />
+    <input type="date" placeholder="Fecha de Préstamo" [(ngModel)]="nuevoPrestamo.fechaPrestamo" name="fechaPrestamo" required />
+    <input type="date" placeholder="Fecha de Devolución" [(ngModel)]="nuevoPrestamo.fechaDevolucion" name="fechaDevolucion" />
+    <button type="submit">Registrar Préstamo</button>
+  </form>
+
+  <table class="tabla">
+    <thead>
+      <tr>
+        <th>Usuario</th>
+        <th>Libro</th>
+        <th>Préstamo</th>
+        <th>Devolución</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let prestamo of prestamos">
+        <td>{{ prestamo.usuario }}</td>
+        <td>{{ prestamo.libro }}</td>
+        <td>{{ prestamo.fechaPrestamo | date }}</td>
+        <td>{{ prestamo.fechaDevolucion | date }}</td>
+        <td>
+          <button (click)="marcarDevuelto(prestamo)">Marcar devuelto</button>
+          <button (click)="eliminarPrestamo(prestamo)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>

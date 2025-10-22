@@ -1,0 +1,35 @@
+<section class="panel">
+  <h2>Gestión de Libros</h2>
+
+  <form class="formulario" (submit)="agregarLibro()">
+    <input type="text" placeholder="Título" [(ngModel)]="nuevoLibro.titulo" name="titulo" required />
+    <input type="text" placeholder="Autor" [(ngModel)]="nuevoLibro.autor" name="autor" required />
+    <input type="text" placeholder="Género" [(ngModel)]="nuevoLibro.genero" name="genero" />
+    <input type="number" placeholder="Año" [(ngModel)]="nuevoLibro.ano" name="ano" />
+    <button type="submit">Agregar Libro</button>
+  </form>
+
+  <table class="tabla">
+    <thead>
+      <tr>
+        <th>Título</th>
+        <th>Autor</th>
+        <th>Género</th>
+        <th>Año</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let libro of libros">
+        <td>{{ libro.titulo }}</td>
+        <td>{{ libro.autor }}</td>
+        <td>{{ libro.genero }}</td>
+        <td>{{ libro.ano }}</td>
+        <td>
+          <button (click)="editarLibro(libro)">Editar</button>
+          <button (click)="eliminarLibro(libro)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>
