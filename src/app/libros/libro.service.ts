@@ -8,7 +8,7 @@ import { ILibro } from '../interfaces/libro.interfaces'; // Asegúrate que tu in
 })
 export class LibroService {
   // ‼️ MUY IMPORTANTE: Reemplaza esta URL con la URL de tu backend en Render
-  private apiUrl = 'https://backend-biblioteca-u4k0.onrender.com/api';
+  private apiUrl = 'https://backend-biblioteca-u4k0.onrender.com/api/libros';
 
   // Inyectamos el HttpClient de Angular para poder hacer peticiones a la API
   constructor(private http: HttpClient) { }
