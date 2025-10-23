@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './prestamos.html',
-  styleUrl: './prestamos.css'
+  styleUrls: ['./prestamos.css', '../panel-gestion.css']
 })
 export class Prestamos {
   nuevoPrestamo = {

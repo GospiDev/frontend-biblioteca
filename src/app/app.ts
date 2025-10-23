@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UserService } from './services/user.services';
+import { AuthService } from './services/auth.service';
 import { User } from './interfaces/user.interfaces';
+import { Router, RouterLink, RouterLinkWithHref, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterOutlet, RouterLinkWithHref],
   templateUrl: './app.html',
   styleUrls: ['./app.css']
 })
@@ -19,11 +21,16 @@ export class App implements OnInit {
   loading = false;
   message = '';
 
-  constructor(private userService: UserService) {}
+  isLoggedIn = false;
+
+  constructor(public authService: AuthService, private userService: UserService, private router: Router) {}
 
   ngOnInit() {
     this.checkConnection();
     this.loadUsers();
+  }
+  logout() {
+    this.authService.logout();
   }
 
   // Verificar conexión con el backend
@@ -39,7 +46,7 @@ export class App implements OnInit {
       }
     });
   }
-
+  
   // Cargar todos los usuarios
   loadUsers() {
     this.loading = true;

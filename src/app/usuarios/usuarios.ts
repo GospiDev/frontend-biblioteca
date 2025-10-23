@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [CommonModule, FormsModule],  
   templateUrl: './usuarios.html',
-  styleUrl: './usuarios.css'
+  styleUrls: ['./usuarios.css', '../panel-gestion.css']
 })
 export class Usuarios {
   nuevoUsuario = {

@@ -1,0 +1,80 @@
+/* Contenedor principal para centrar la tarjeta de login vertical y horizontalmente */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* La "tarjeta" que contiene el formulario */
+.login-card {
+  background-color: rgba(255, 255, 255, 0.95); /* Un blanco semi-transparente */
+  color: #333; /* Texto oscuro para la tarjeta */
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.login-card h2 {
+  margin-bottom: 25px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+/* Estilo para los campos de texto */
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 400;
+  color: #555;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #F97316; /* Resalta el borde con el color principal */
+  box-shadow: 0 0 5px rgba(249, 115, 22, 0.5);
+}
+
+/* Estilo para el botón de login */
+.login-button {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 8px;
+  background-color: #1a1a1a; /* Un color oscuro para el botón principal */
+  color: #FFFFFF;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.login-button:hover {
+  background-color: #333;
+  transform: translateY(-2px); /* Pequeño efecto al pasar el mouse */
+}
+
+/* Mensaje de error */
+.error-message {
+  color: #D32F2F; /* Un rojo oscuro para errores */
+  margin-top: 15px;
+  min-height: 20px; /* Evita que el layout salte cuando aparece el mensaje */
+}
