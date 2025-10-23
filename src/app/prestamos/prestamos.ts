@@ -16,8 +16,8 @@ export class Prestamos implements OnInit {
   nuevoPrestamo = {
     usuario: '',
     libro: '',
-    fechaPrestamo: 0,
-    fechaDevolucion: 0
+    fechaPrestamo: null,
+    fechaDevolucion: null
   };
 
   constructor(private prestamoService: PrestamoService) {}
@@ -40,7 +40,7 @@ export class Prestamos implements OnInit {
     this.prestamoService.registrarPrestamo(this.nuevoPrestamo as IPrestamo).subscribe({
       next: (prestamoGuardado) => {
         this.prestamos.push(prestamoGuardado);
-        this.nuevoPrestamo = { usuario: '', libro: '', fechaPrestamo: 0, fechaDevolucion: 0 };
+        this.nuevoPrestamo = { usuario: '', libro: '', fechaPrestamo: null, fechaDevolucion: null };
       },
       error: (err) => console.error('Error al registrar el prestamo', err)
     });
