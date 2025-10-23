@@ -1,23 +1,31 @@
 import { Injectable } from '@angular/core';
-import { IPrestamo } from '../interfaces/prestamo.interfaces';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { IPrestamo } from '../interfaces/prestamo.interfaces'; // Asegúrate que tu interfaz coincida
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class PrestamoService {
-    private prestamos: IPrestamo[] = [];
+  private apiUrl = 'https://backend-biblioteca-u4k0.onrender.com/api/prestamo';
 
-    registrarPrestamo(): IPrestamo[] {
-        return this.prestamos;
-    }
+  constructor(private http: HttpClient) { }
 
-    marcarDevuelto(prestamo: IPrestamo): void {
-        this.prestamos.push(prestamo);
-    }
+  getPrestamos(): Observable<IPrestamo[]> {
+    return this.http.get<IPrestamo[]>(this.apiUrl);
+  }
 
-    eliminarPrestamo(index: number): void {
-        this.prestamos.splice(index, 1);
-    }
+  registrarPrestamo(prestamo: IPrestamo): Observable<IPrestamo> {
+    return this.http.post<IPrestamo>(this.apiUrl, prestamo);
+  }
 
-  // etc…
+  marcarDevuelto(id: string, prestamo: IPrestamo): Observable<IPrestamo> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.put<IPrestamo>(url, prestamo);
+  }
+
+  eliminarPrestamo(id: string): Observable<any> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.delete<any>(url);
+  }
 }

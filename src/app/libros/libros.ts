@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core'; // Importa OnInit
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { LibroService } from '../libros/libro.service'; // Asegúrate que la ruta sea correcta
+import { LibroService } from '../libros/libro.service';
 import { ILibro } from '../interfaces/libro.interfaces';
 
 @Component({
@@ -11,26 +11,21 @@ import { ILibro } from '../interfaces/libro.interfaces';
   templateUrl: './libros.html',
   styleUrls: ['./libros.css', '../panel-gestion.css']
 })
-export class Libros implements OnInit { // Implementa la interfaz OnInit
-  
+export class Libros implements OnInit { 
   libros: ILibro[] = [];
-  // Usamos un tipo parcial para el nuevo libro porque no tendrá _id al crearse
   nuevoLibro: Omit<ILibro, '_id'> = {
     titulo: '',
     autor: '',
     genero: '',
-    ano: null // Usar null para el año si puede estar vacío
+    ano: null
   };
   
-  // 1. Inyecta el LibroService en el constructor
   constructor(private libroService: LibroService) {}
 
-  // 2. ngOnInit se ejecuta una vez que el componente se ha inicializado
   ngOnInit(): void {
     this.cargarLibros();
   }
 
-  // 3. Lógica para cargar los libros desde el backend
   cargarLibros(): void {
     this.libroService.getLibros().subscribe({
       next: (data) => {

@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { PrestamoService } from '../prestamos/prestamo.service';
+import { IPrestamo} from '../interfaces/prestamo.interfaces';
 
 @Component({
   selector: 'app-prestamos',
@@ -9,7 +11,8 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './prestamos.html',
   styleUrls: ['./prestamos.css', '../panel-gestion.css']
 })
-export class Prestamos {
+export class Prestamos implements OnInit {
+  prestamos: IPrestamo[] = [];
   nuevoPrestamo = {
     usuario: '',
     libro: '',
@@ -17,13 +20,30 @@ export class Prestamos {
     fechaDevolucion: 0
   };
 
-  prestamos: Array<{ usuario: string; libro: string; fechaPrestamo: number; fechaDevolucion: number }> = [];
+  constructor(private prestamoService: PrestamoService) {}
+  
+  ngOnInit(): void {
+    this.cargarPrestamos();
+  }
+
+  cargarPrestamos(): void {
+    this.prestamoService.getPrestamos().subscribe({
+      next: (data) => {
+        this.prestamos = data;
+        console.log('Prestamos cargados exitosamente:', this.prestamos);
+      },
+      error: (err) => console.error('Error al cargar Prestamos:', err)
+    });
+  }
 
   registrarPrestamo() {
-    // lógica para agregar libro
-    this.prestamos.push({ ...this.nuevoPrestamo });
-    // luego limpiar el formulario:
-    this.nuevoPrestamo = { usuario: '', libro: '', fechaPrestamo: 0, fechaDevolucion: 0 };
+    this.prestamoService.registrarPrestamo(this.nuevoPrestamo as IPrestamo).subscribe({
+      next: (prestamoGuardado) => {
+        this.prestamos.push(prestamoGuardado);
+        this.nuevoPrestamo = { usuario: '', libro: '', fechaPrestamo: 0, fechaDevolucion: 0 };
+      },
+      error: (err) => console.error('Error al registrar el prestamo', err)
+    });
   }
 
   marcarDevuelto(prestamo: any) {
@@ -31,6 +51,13 @@ export class Prestamos {
   }
 
   eliminarPrestamo(prestamo: any) {
-    // lógica de eliminar
+    if (confirm(`¿Estás seguro de que deseas eliminar "${prestamo.titulo}"?`)) {
+      this.prestamoService.eliminarPrestamo(prestamo._id).subscribe({
+        next: () => {
+          this.prestamos = this.prestamos.filter(l => l._id !== prestamo._id);
+        },
+        error: (err) => console.error('Error al eliminar el prestamo:', err)
+      });
+    }
   }
 }
