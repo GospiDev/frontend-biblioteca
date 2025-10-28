@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IPrestamo } from '../interfaces/prestamo.interfaces'; // Asegúrate que tu interfaz coincida
+import { IPrestamo } from '../interfaces/prestamo.interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PrestamoService {
-  private apiUrl = 'https://backend-biblioteca-u4k0.onrender.com/api/prestamo';
+  private apiUrl = 'https://backend-biblioteca-u4k0.onrender.com/api/prestamos';
 
   constructor(private http: HttpClient) { }
 
