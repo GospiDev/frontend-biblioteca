@@ -33,10 +33,12 @@
         <th>Acciones</th>
       </tr>
     </thead>
-    <tbody>
+  <tbody>
       <tr *ngFor="let prestamo of prestamos">
-        <td>{{ prestamo.usuario }}</td>
-        <td>{{ prestamo.libro }}</td>
+        <td>{{ prestamo.usuario.nombre }}</td> 
+        
+        <td>{{ prestamo.libro.titulo }}</td> 
+        
         <td>{{ prestamo.fechaPrestamo | date }}</td>
         <td>{{ prestamo.fechaDevolucion | date }}</td>
         <td>
@@ -44,6 +46,6 @@
           <button (click)="eliminarPrestamo(prestamo)">Eliminar</button>
         </td>
       </tr>
-    </tbody>
+    </tbody>  
   </table>
 </section>
