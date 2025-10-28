@@ -39,7 +39,6 @@ export class Usuarios implements OnInit {
   registrarUsuario() {
     this.usuarioService.registrarUsuario(this.nuevoUsuario as IUsuario).subscribe({
       next: (usuarioGuardado) => {
-        //this.usuarios.push(usuarioGuardado);
         this.cargarUsuarios();
         this.nuevoUsuario = { nombre: '', correo: '', rut: '' };
       },
