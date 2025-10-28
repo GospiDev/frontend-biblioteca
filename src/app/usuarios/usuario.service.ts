@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IUsuario } from '../interfaces/usuario.interfaces';
 
@@ -11,8 +11,12 @@ export class UsuarioService {
     
     constructor(private http: HttpClient) { }
     
-    getUsuarios(): Observable<IUsuario[]> {
-        return this.http.get<IUsuario[]>(this.apiUrl);
+    getUsuarios(searchTerm: string = ''): Observable<IUsuario[]> {
+        let params = new HttpParams();
+        if (searchTerm) {
+            params = params.set('search', searchTerm);
+        }
+        return this.http.get<IUsuario[]>(this.apiUrl, { params: params });
     }
 
     registrarUsuario(usuario: IUsuario): Observable<IUsuario> {

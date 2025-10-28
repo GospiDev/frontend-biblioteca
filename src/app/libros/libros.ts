@@ -19,6 +19,7 @@ export class Libros implements OnInit {
     genero: '',
     ano: null
   };
+  terminoBusqueda: string = '';
   
   constructor(private libroService: LibroService) {}
 
@@ -27,7 +28,7 @@ export class Libros implements OnInit {
   }
 
   cargarLibros(): void {
-    this.libroService.getLibros().subscribe({
+    this.libroService.getLibros(this.terminoBusqueda).subscribe({
       next: (data) => {
         this.libros = data;
         console.log('Libros cargados exitosamente:', this.libros);
@@ -36,33 +37,24 @@ export class Libros implements OnInit {
     });
   }
 
-  // 4. Lógica para agregar un libro (ahora llama al servicio)
   agregarLibro(): void {
     this.libroService.agregarLibro(this.nuevoLibro as ILibro).subscribe({
       next: (libroGuardado) => {
-        // Agregamos el libro que nos devuelve el backend (ya tiene _id)
-        this.libros.push(libroGuardado);
-        // Limpiamos el formulario
+        this.cargarLibros();
         this.nuevoLibro = { titulo: '', autor: '', genero: '', ano: null };
       },
       error: (err) => console.error('Error al agregar el libro:', err)
     });
   }
 
-  // Lógica para editar (la veremos en un paso extra)
   editarLibro(libro: ILibro): void {
-    // Aquí implementaremos la lógica para abrir un modal o poner los datos en el formulario
     console.log('Editando:', libro);
   }
 
-// 5. Lógica para eliminar un libro (ahora llama al servicio)
   eliminarLibro(libro: ILibro): void {
-    // Pedimos confirmación antes de borrar
     if (confirm(`¿Estás seguro de que deseas eliminar "${libro.titulo}"?`)) {
-      // Usamos el _id del libro para decirle al backend cuál borrar
       this.libroService.eliminarLibro(libro._id).subscribe({
         next: () => {
-          // Si se elimina en el backend, lo quitamos de nuestro array local
           this.libros = this.libros.filter(l => l._id !== libro._id);
         },
         error: (err) => console.error('Error al eliminar el libro:', err)

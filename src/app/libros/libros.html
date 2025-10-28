@@ -1,6 +1,15 @@
 <section class="panel">
   <h2>Gestión de Libros</h2>
 
+  <div class="busqueda-container">
+    <input 
+      type="text" 
+      placeholder="Buscar por título o autor..." 
+      [(ngModel)]="terminoBusqueda"
+      (keyup.enter)="cargarLibros()">
+    <button (click)="cargarLibros()">Buscar</button>
+  </div>
+
   <form class="formulario" (submit)="agregarLibro()">
     <input type="text" placeholder="Título" [(ngModel)]="nuevoLibro.titulo" name="titulo" required />
     <input type="text" placeholder="Autor" [(ngModel)]="nuevoLibro.autor" name="autor" required />

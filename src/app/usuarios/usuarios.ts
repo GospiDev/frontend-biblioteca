@@ -18,6 +18,7 @@ export class Usuarios implements OnInit {
     correo: '',
     rut: '',
   };
+  terminoBusqueda: string = '';
 
   constructor(private usuarioService: UsuarioService) {}
 
@@ -26,7 +27,7 @@ export class Usuarios implements OnInit {
   }
   
   cargarUsuarios(): void {
-    this.usuarioService.getUsuarios().subscribe({
+    this.usuarioService.getUsuarios(this.terminoBusqueda).subscribe({
       next: (data) => {
         this.usuarios = data;
         console.log('Usuarios cargados exitosamente:', this.usuarios);
@@ -38,7 +39,8 @@ export class Usuarios implements OnInit {
   registrarUsuario() {
     this.usuarioService.registrarUsuario(this.nuevoUsuario as IUsuario).subscribe({
       next: (usuarioGuardado) => {
-        this.usuarios.push(usuarioGuardado);
+        //this.usuarios.push(usuarioGuardado);
+        this.cargarUsuarios();
         this.nuevoUsuario = { nombre: '', correo: '', rut: '' };
       },
       error: (err) => console.error('Error al registrar el usuario', err)

@@ -1,6 +1,16 @@
 <section class="panel">
   <h2>Gestión de Usuarios</h2>
 
+  <div class="busqueda-container">
+    <input 
+      type="text" 
+      placeholder="Buscar por título o autor..." 
+      [(ngModel)]="terminoBusqueda"
+      (keyup.enter)="cargarUsuarios()">
+    <button (click)="cargarUsuarios()">Buscar</button>
+  </div>
+
+
   <form class="formulario" (submit)="registrarUsuario()">
     <input type="text" placeholder="Nombre" [(ngModel)]="nuevoUsuario.nombre" name="nombre" required />
     <input type="email" placeholder="Correo" [(ngModel)]="nuevoUsuario.correo" name="correo" required />
