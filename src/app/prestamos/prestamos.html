@@ -1,11 +1,25 @@
 <section class="panel">
   <h2>Gestión de Préstamos</h2>
 
-  <form class="formulario" (submit)="registrarPrestamo()">
-    <input type="text" placeholder="Usuario (RUT o Nombre)" [(ngModel)]="nuevoPrestamo.usuario" name="usuario" required />
-    <input type="text" placeholder="Libro (Título)" [(ngModel)]="nuevoPrestamo.libro" name="libro" required />
-    <input type="date" placeholder="Fecha de Préstamo" [(ngModel)]="nuevoPrestamo.fechaPrestamo" name="fechaPrestamo" required />
-    <input type="date" placeholder="Fecha de Devolución" [(ngModel)]="nuevoPrestamo.fechaDevolucion" name="fechaDevolucion" />
+  <section class="panel">
+  <h2>Gestión de Préstamos</h2> <form class="formulario" (ngSubmit)="registrarPrestamo()">
+    
+    <select [(ngModel)]="nuevoPrestamo.usuario" name="usuario" required>
+      <option value="" disabled>Selecciona un usuario</option>
+      <option *ngFor="let user of usuarios" [value]="user._id">
+        {{ user.nombre }} ({{ user.correo }})
+      </option>
+    </select>
+
+    <select [(ngModel)]="nuevoPrestamo.libro" name="libro" required>
+      <option value="" disabled>Selecciona un libro</option>
+      <option *ngFor="let libro of libros" [value]="libro._id">
+        {{ libro.titulo }} ({{ libro.autor }})
+      </option>
+    </select>
+    
+    <input type="date" [(ngModel)]="nuevoPrestamo.fechaPrestamo" name="fechaPrestamo" required />
+    <input type="date" [(ngModel)]="nuevoPrestamo.fechaDevolucion" name="fechaDevolucion" />
     <button type="submit">Registrar Préstamo</button>
   </form>
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IPrestamo } from '../interfaces/prestamo.interfaces';
+import { IPrestamo, ICrearPrestamo } from '../interfaces/prestamo.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class PrestamoService {
     return this.http.get<IPrestamo[]>(this.apiUrl);
   }
 
-  registrarPrestamo(prestamo: IPrestamo): Observable<IPrestamo> {
+  registrarPrestamo(prestamo: ICrearPrestamo): Observable<IPrestamo> {
     return this.http.post<IPrestamo>(this.apiUrl, prestamo);
   }
 

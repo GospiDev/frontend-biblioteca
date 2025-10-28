@@ -1,8 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
 import { PrestamoService } from '../prestamos/prestamo.service';
-import { IPrestamo} from '../interfaces/prestamo.interfaces';
+import { LibroService } from '../libros/libro.service';
+import { UsuarioService } from '../usuarios/usuario.service';
+
+import { IPrestamo, ICrearPrestamo } from '../interfaces/prestamo.interfaces';
+import { ILibro } from '../interfaces/libro.interfaces';
+import { IUsuario } from '../interfaces/usuario.interfaces';
 
 @Component({
   selector: 'app-prestamos',
@@ -13,17 +19,24 @@ import { IPrestamo} from '../interfaces/prestamo.interfaces';
 })
 export class Prestamos implements OnInit {
   prestamos: IPrestamo[] = [];
-  nuevoPrestamo = {
+  libros: ILibro[] = [];
+  usuarios: IUsuario[] = [];
+
+  nuevoPrestamo: ICrearPrestamo = {
     usuario: '',
     libro: '',
     fechaPrestamo: null,
     fechaDevolucion: null
   };
 
-  constructor(private prestamoService: PrestamoService) {}
+  constructor(private prestamoService: PrestamoService, 
+    private libroService: LibroService,
+    private usuarioService: UsuarioService) {}
   
   ngOnInit(): void {
     this.cargarPrestamos();
+    this.cargarLibros();
+    this.cargarUsuarios();
   }
 
   cargarPrestamos(): void {
@@ -36,15 +49,23 @@ export class Prestamos implements OnInit {
     });
   }
 
-  registrarPrestamo() {
-    this.prestamoService.registrarPrestamo(this.nuevoPrestamo as IPrestamo).subscribe({
-      next: (prestamoGuardado) => {
-        this.prestamos.push(prestamoGuardado);
-        this.nuevoPrestamo = { usuario: '', libro: '', fechaPrestamo: null, fechaDevolucion: null };
-      },
-      error: (err) => console.error('Error al registrar el prestamo', err)
-    });
+  cargarLibros(): void {
+    this.libroService.getLibros().subscribe(data => this.libros = data);
   }
+  cargarUsuarios(): void {
+    this.usuarioService.getUsuarios().subscribe(data => this.usuarios = data);
+  }
+
+  registrarPrestamo(): void {
+      this.prestamoService.registrarPrestamo(this.nuevoPrestamo).subscribe({
+        next: (prestamoGuardado) => {
+          this.prestamos.push(prestamoGuardado); 
+          
+          this.nuevoPrestamo = { usuario: '', libro: '', fechaPrestamo: null, fechaDevolucion: null };
+        },
+        error: (err) => console.error('Error al registrar el prestamo', err)
+      });
+    }
 
   marcarDevuelto(prestamo: any) {
     // lógica de edición
