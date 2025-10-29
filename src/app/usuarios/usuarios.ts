@@ -22,6 +22,7 @@ export class Usuarios implements OnInit {
   };
   terminoBusqueda: string = '';
   usuarioSeleccionado: IUsuario | null = null;
+  nuevaPasswordModal: string = '';
 
   constructor(private usuarioService: UsuarioService) {}
 
@@ -50,26 +51,33 @@ export class Usuarios implements OnInit {
 
   editarUsuario(usuario: IUsuario): void {
     this.usuarioSeleccionado = { ...usuario };
+    this.nuevaPasswordModal = '';
   }
   cerrarModal(): void {
     this.usuarioSeleccionado = null;
   }
   guardarCambios(): void {
-    if (!this.usuarioSeleccionado) return;
+      if (!this.usuarioSeleccionado) return;
 
-    this.usuarioService.updateUsuario(this.usuarioSeleccionado._id, this.usuarioSeleccionado).subscribe({
-      next: (usuarioActualizado) => {
-        const index = this.usuarios.findIndex(u => u._id === usuarioActualizado._id);
-        
-        if (index !== -1) {
-          this.usuarios[index] = usuarioActualizado;
-        }
-        
-        this.cerrarModal();
-      },
-      error: (err) => console.error('Error al guardar los cambios', err)
-    });
-  }
+      const cambios: Partial<IUsuario> & { password?: string } = {
+        ...this.usuarioSeleccionado
+      };
+
+      if (this.nuevaPasswordModal.trim() !== '') {
+        cambios.password = this.nuevaPasswordModal;
+      }
+
+      this.usuarioService.updateUsuario(this.usuarioSeleccionado._id, cambios).subscribe({
+        next: (usuarioActualizado) => {
+          const index = this.usuarios.findIndex(u => u._id === usuarioActualizado._id);
+          if (index !== -1) {
+            this.usuarios[index] = usuarioActualizado;
+          }
+          this.cerrarModal();
+        },
+        error: (err) => console.error('Error al guardar los cambios', err)
+      });
+    }
 
   eliminarUsuario(usuario: any) {
     if (confirm(`¿Estás seguro de que deseas eliminar "${usuario.titulo}"?`)) {

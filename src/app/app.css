@@ -1,22 +1,19 @@
-/* El header que contiene el título, nav y estado de conexión */
 .header {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
   padding: 15px 30px;
-  background-color: rgba(0, 0, 0, 0.15); /* Fondo semi-transparente para diferenciarlo */
+  background-color: rgba(0, 0, 0, 0.15);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .header h1 {
-  font-size: 24px;
-  font-weight: 600;
+  grid-column: 1;
+  justify-self: start;
 }
 
-/* Estilos de la navegación */
-nav {
-  display: flex;
-  gap: 10px; /* Espacio entre los enlaces */
+.header nav {
+  grid-column: 2;
 }
 
 nav a {
