@@ -11,7 +11,7 @@
     <button (click)="cargarLibros()">Buscar</button>
   </div>
 
-  <form class="formulario" *ngIf="esAdmin" (ngsubmit)="agregarLibro()">
+  <form class="formulario" *ngIf="esAdmin" (submit)="agregarLibro()">
     <input type="text" placeholder="Título" [(ngModel)]="nuevoLibro.titulo" name="titulo" required />
     <input type="text" placeholder="Autor" [(ngModel)]="nuevoLibro.autor" name="autor" required />
     <input type="text" placeholder="Género" [(ngModel)]="nuevoLibro.genero" name="genero" />
