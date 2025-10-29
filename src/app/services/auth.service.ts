@@ -52,17 +52,15 @@ export class AuthService {
     return !!localStorage.getItem('token');
   }
 
-  login(correo: string, password: string) {
-    return this.http.post<{ token: string }>(`${this.apiUrl}/login`, { correo, password })
+  login(loginIdentifier: string, password: string) {
+    
+    return this.http.post<{ token: string }>(`${this.apiUrl}/login`, { loginIdentifier, password })
       .pipe(
         tap(response => {
           localStorage.setItem('token', response.token);
-          
           const decoded = jwtDecode<JwtPayload>(response.token);
-          
           this.loggedIn.next(true);
           this.userRole.next(decoded.rol);
-          
           this.router.navigate(['/libros']);
         })
       );

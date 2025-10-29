@@ -7,9 +7,10 @@
       <a routerLink="/prestamos" routerLinkActive="activo">Préstamos</a>
 
       <a 
+        *ngIf="(authService.role$ | async) === 'Admin'" 
         routerLink="/usuarios" 
         routerLinkActive="activo">
-        Usuarios (Temp)
+        Usuarios
       </a>
       
       <a (click)="logout()">Cerrar Sesión</a>
