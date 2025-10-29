@@ -12,12 +12,21 @@
 
 
   <form class="formulario" (ngSubmit)="registrarUsuario()">
-
+  
     <input type="text" placeholder="Nombre" [(ngModel)]="nuevoUsuario.nombre" name="nombre" required />
     <input type="email" placeholder="Correo" [(ngModel)]="nuevoUsuario.correo" name="correo" required />
-    <input type="text" placeholder="RUT" [(ngModel)]="nuevoUsuario.rut" name="rut" />
-    
-    <input type="password" placeholder="Contraseña" [(ngModel)]="nuevoUsuario.password" name="password" required />
+
+    <input 
+      type="text" 
+      placeholder="RUT" 
+      [(ngModel)]="nuevoUsuario.rut" 
+      name="rut" 
+      autocomplete="off" /> <input 
+      type="password" 
+      placeholder="Contraseña" 
+      [(ngModel)]="nuevoUsuario.password" 
+      name="password" 
+      autocomplete="new-password" required />
 
     <select [(ngModel)]="nuevoUsuario.rol" name="rol" required>
       <option value="Usuario">Usuario</option>
