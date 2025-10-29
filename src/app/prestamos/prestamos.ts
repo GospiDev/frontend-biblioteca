@@ -56,6 +56,21 @@ export class Prestamos implements OnInit {
     this.usuarioService.getUsuarios().subscribe(data => this.usuarios = data);
   }
 
+  get puedeRegistrar(): boolean {
+    if (!this.nuevoPrestamo.usuario) {
+      return false;
+    }
+    
+    const usuarioSeleccionado = this.usuarios.find(u => u._id === this.nuevoPrestamo.usuario);
+    
+    if (!usuarioSeleccionado) {
+      return false;
+    }
+    
+    const situacion = usuarioSeleccionado.situacion;
+    return situacion === 'Vigente' || situacion === 'Préstamo Activo';
+  }
+
   registrarPrestamo(): void {
       this.prestamoService.registrarPrestamo(this.nuevoPrestamo).subscribe({
         next: (prestamoGuardado) => {

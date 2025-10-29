@@ -20,8 +20,12 @@
     
     <input type="date" [(ngModel)]="nuevoPrestamo.fechaPrestamo" name="fechaPrestamo" required />
     <input type="date" [(ngModel)]="nuevoPrestamo.fechaDevolucion" name="fechaDevolucion" />
-    <button type="submit">Registrar Préstamo</button>
+    <button type="submit" [disabled]="!puedeRegistrar">Registrar Préstamo</button>
   </form>
+
+  <div *ngIf="nuevoPrestamo.usuario && !puedeRegistrar" class="mensaje-error-prestamo">
+    Este usuario está atrasado o bloqueado y no puede registrar préstamos.
+  </div>
 
   <table class="tabla">
     <thead>

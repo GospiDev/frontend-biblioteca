@@ -47,18 +47,7 @@ export class Usuarios implements OnInit {
     });
   }
 
-  editarSituacion(usuario: any): void {
-    const nuevaSituacion = usuario.situacion === 'Vigente' ? 'Atrasado' : 'Bloqueado';
-    const cambios = { situacion: nuevaSituacion };
-    this.usuarioService.updateUsuario(usuario._id, cambios).subscribe({
-      next: (usuarioActualizado) => {
-        usuario.situacion = usuarioActualizado.situacion;
-      },
-      error: (err) => console.error('Error al actualizar la situación', err)
-    });
-  }
-
-  abrirModalEditar(usuario: IUsuario): void {
+  editarUsuario(usuario: IUsuario): void {
     this.usuarioSeleccionado = { ...usuario };
   }
   cerrarModal(): void {
@@ -79,10 +68,6 @@ export class Usuarios implements OnInit {
       },
       error: (err) => console.error('Error al guardar los cambios', err)
     });
-  }
-
-  editarUsuario(usuario: any) {
-    // lógica de edición
   }
 
   eliminarUsuario(usuario: any) {
