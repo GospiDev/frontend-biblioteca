@@ -44,6 +44,13 @@ export class Usuarios implements OnInit {
     this.usuarioService.registrarUsuario(this.nuevoUsuario).subscribe({
       next: (usuarioGuardado) => {
         this.usuarios.push(usuarioGuardado);
+        this.nuevoUsuario = {
+          nombre: '',
+          correo: '',
+          rut: '',
+          rol: 'Usuario',
+          password: ''
+        };
       },
       error: (err) => console.error('Error al registrar el usuario', err)
     });
