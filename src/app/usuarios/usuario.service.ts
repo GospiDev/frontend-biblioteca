@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IUsuario } from '../interfaces/usuario.interfaces';
+import { IUsuario, ICrearUsuario } from '../interfaces/usuario.interfaces';
 
 @Injectable({
     providedIn: 'root'
@@ -19,7 +19,7 @@ export class UsuarioService {
         return this.http.get<IUsuario[]>(this.apiUrl, { params: params });
     }
 
-    registrarUsuario(usuario: IUsuario): Observable<IUsuario> {
+    registrarUsuario(usuario: ICrearUsuario): Observable<IUsuario> {
         return this.http.post<IUsuario>(this.apiUrl, usuario);
     }
 

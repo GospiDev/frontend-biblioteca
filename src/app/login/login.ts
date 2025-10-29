@@ -19,11 +19,13 @@ export class Login {
   constructor(private authService: AuthService) {}
 
   login() {
-    if (this.usuario === 'admin' && this.clave === '1234') {
-      this.authService.login();
-    } 
-    else {
-      this.mensaje = 'Usuario o contraseña incorrectos';
-    }
+    this.authService.login(this.usuario, this.clave).subscribe({
+      next: () => {
+        this.mensaje = '¡Bienvenido!';
+      },
+      error: (err) => {
+        this.mensaje = err.error.message || 'Error al iniciar sesión';
+      }
+    });
   }
 }

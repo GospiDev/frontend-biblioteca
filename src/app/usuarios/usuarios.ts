@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UsuarioService } from '../usuarios/usuario.service';
-import { IUsuario} from '../interfaces/usuario.interfaces';
+import { IUsuario, ICrearUsuario} from '../interfaces/usuario.interfaces';
 
 @Component({
   selector: 'app-usuarios',
@@ -13,10 +13,12 @@ import { IUsuario} from '../interfaces/usuario.interfaces';
 })
 export class Usuarios implements OnInit {
   usuarios: IUsuario[] = [];
-  nuevoUsuario = {
+  nuevoUsuario: ICrearUsuario = {
     nombre: '',
     correo: '',
     rut: '',
+    rol: 'Usuario',
+    password: ''
   };
   terminoBusqueda: string = '';
   usuarioSeleccionado: IUsuario | null = null;
@@ -38,10 +40,9 @@ export class Usuarios implements OnInit {
   }
 
   registrarUsuario() {
-    this.usuarioService.registrarUsuario(this.nuevoUsuario as IUsuario).subscribe({
+    this.usuarioService.registrarUsuario(this.nuevoUsuario).subscribe({
       next: (usuarioGuardado) => {
-        this.cargarUsuarios();
-        this.nuevoUsuario = { nombre: '', correo: '', rut: '' };
+        this.usuarios.push(usuarioGuardado);
       },
       error: (err) => console.error('Error al registrar el usuario', err)
     });

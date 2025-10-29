@@ -1,43 +1,81 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { tap } from 'rxjs/operators';
+import { jwtDecode } from 'jwt-decode';
 
+interface JwtPayload {
+  id: string;
+  rol: 'Admin' | 'Usuario';
+  iat: number;
+  exp: number;
+}
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthService {
-  // BehaviorSubject mantiene el estado actual y notifica a los suscriptores cuando cambia.
-  private loggedIn = new BehaviorSubject<boolean>(this.hasToken());
+  private apiUrl = 'https://backend-biblioteca-u4k0.onrender.com/api/auth';
   
-  // Exponemos el estado como un Observable para que los componentes puedan suscribirse.
+  private loggedIn = new BehaviorSubject<boolean>(this.hasToken());
+  private userRole = new BehaviorSubject<'Admin' | 'Usuario' | null>(null);
+
   isLoggedIn$ = this.loggedIn.asObservable();
+  role$ = this.userRole.asObservable();
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private http: HttpClient
+  ) {
+    this.checkTokenAndSetRole();
+  }
 
-  /**
-   * Revisa si el token/indicador de sesión existe en localStorage.
-   */
+  private checkTokenAndSetRole(): void {
+    const token = localStorage.getItem('token');
+    if (token) {
+      try {
+        const decoded = jwtDecode<JwtPayload>(token);
+        if (decoded.exp * 1000 > Date.now()) {
+          this.loggedIn.next(true);
+          this.userRole.next(decoded.rol);
+        } else {
+          this.logout();
+        }
+      } catch (error) {
+        this.logout();
+      }
+    }
+  }
+
   private hasToken(): boolean {
-    return !!localStorage.getItem('logged');
+    return !!localStorage.getItem('token');
   }
 
-  /**
-   * Lógica para iniciar sesión.
-   */
-  login() {
-    // Aquí iría la lógica para validar contra un backend real.
-    // Por ahora, simulamos el éxito.
-    localStorage.setItem('logged', 'true');
-    this.loggedIn.next(true); // Notifica a toda la app que el estado cambió a "conectado".
-    this.router.navigate(['/libros']); // Navega a la página principal.
+  login(correo: string, password: string) {
+    return this.http.post<{ token: string }>(`${this.apiUrl}/login`, { correo, password })
+      .pipe(
+        tap(response => {
+          localStorage.setItem('token', response.token);
+          
+          const decoded = jwtDecode<JwtPayload>(response.token);
+          
+          this.loggedIn.next(true);
+          this.userRole.next(decoded.rol);
+          
+          this.router.navigate(['/libros']);
+        })
+      );
   }
 
-  /**
-   * Lógica para cerrar sesión.
-   */
   logout() {
-    localStorage.removeItem('logged');
-    this.loggedIn.next(false); // Notifica a toda la app que el estado cambió a "desconectado".
-    this.router.navigate(['/login']); // Navega a la página de login.
+    localStorage.removeItem('token');
+    this.loggedIn.next(false);
+    this.userRole.next(null);
+    this.router.navigate(['/login']);
+  }
+  
+  getRole(): 'Admin' | 'Usuario' | null {
+    return this.userRole.value;
   }
 }
