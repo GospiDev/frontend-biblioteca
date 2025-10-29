@@ -16,10 +16,15 @@
     </nav>     
 
     <div class="connection-status">
-      </div>
+        <span [class]="isConnected ? 'connected' : 'disconnected'">
+          {{ isConnected ? '✅ Conectado' : '❌ Desconectado' }}
+        </span>
+    </div>
   </header>
 
   <main>
     <router-outlet></router-outlet>
   </main>
 </div>
+
+<router-outlet *ngIf="!(authService.isLoggedIn$ | async)"></router-outlet>
