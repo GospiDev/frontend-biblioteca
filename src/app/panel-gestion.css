@@ -133,3 +133,16 @@
 .busqueda-container button:hover {
   background-color: #333;
 }
+
+.vigente {
+  color: #10B981;
+  font-weight: 600;
+}
+.atrasado {
+  color: #efb344;
+  font-weight: 600;
+}
+.bloqueado {
+  color: #EF4444;
+  font-weight: 600;
+}

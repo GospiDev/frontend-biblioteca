@@ -24,6 +24,7 @@
         <th>Nombre</th>
         <th>Correo</th>
         <th>RUT</th>
+        <th>Situación</th>
         <th>Acciones</th>
       </tr>
     </thead>
@@ -32,6 +33,13 @@
         <td>{{ usuario.nombre }}</td>
         <td>{{ usuario.correo }}</td>
         <td>{{ usuario.rut }}</td>
+        <td>
+          <span [class.vigente]="usuario.situacion === 'Vigente'" 
+                [class.atrasado]="usuario.situacion === 'Atrasado'"
+                [class.bloqueado]="usuario.situacion === 'Bloqueado'">
+            {{ usuario.situacion }}
+        </span>
+        </td>
         <td>
           <button (click)="editarUsuario(usuario)">Editar</button>
           <button (click)="eliminarUsuario(usuario)">Eliminar</button>
