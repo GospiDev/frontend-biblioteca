@@ -24,7 +24,7 @@
   </form>
 
   <div *ngIf="nuevoPrestamo.usuario && !puedeRegistrar" class="mensaje-error-prestamo">
-    Este usuario está atrasado o bloqueado y no puede registrar préstamos.
+    Este usuario tiene la situación "<b>{{ usuarioSeleccionado?.situacion }}</b>" y no puede registrar nuevos préstamos.
   </div>
 
   <table class="tabla">

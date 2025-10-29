@@ -56,6 +56,12 @@ export class Prestamos implements OnInit {
     this.usuarioService.getUsuarios().subscribe(data => this.usuarios = data);
   }
 
+  get usuarioSeleccionado(): IUsuario | undefined {
+    if (!this.nuevoPrestamo.usuario) {
+      return undefined;
+    }
+    return this.usuarios.find(u => u._id === this.nuevoPrestamo.usuario);
+  }
   get puedeRegistrar(): boolean {
     if (!this.nuevoPrestamo.usuario) {
       return false;
