@@ -1,44 +1,40 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IUsuario, ICrearUsuario } from '../interfaces/usuario.interfaces';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class UsuarioService {
-    private apiUrl = 'https://backend-biblioteca-u4k0.onrender.com/api/usuario';
-    
-    constructor(private http: HttpClient) { }
-    
-    getUsuarios(searchTerm: string = ''): Observable<IUsuario[]> {
-        let params = new HttpParams();
-        if (searchTerm) {
-            params = params.set('search', searchTerm);
-        }
-        return this.http.get<IUsuario[]>(this.apiUrl, { params: params });
-    }
+  private apiUrl = 'https://backend-biblioteca-u4k0.onrender.com/api/usuarios';
+  
+  private healthUrl = 'https://backend-biblioteca-u4k0.onrender.com/api/health';
 
-    registrarUsuario(usuario: ICrearUsuario): Observable<IUsuario> {
-        return this.http.post<IUsuario>(this.apiUrl, usuario);
-    }
 
-    updateUsuario(id: string, cambios: Partial<IUsuario> & { password?: string }): Observable<IUsuario> {
-        return this.http.put<IUsuario>(`${this.apiUrl}/usuarios/${id}`, cambios);
-    }
+  constructor(private http: HttpClient) { }
 
-    editarUsuario(id: string, usuario: IUsuario): Observable<IUsuario> {
-        const url = `${this.apiUrl}/${id}`;
-        return this.http.put<IUsuario>(url, usuario);
+  getUsuarios(searchTerm: string = ''): Observable<IUsuario[]> {
+    let params = new HttpParams();
+    if (searchTerm) {
+      params = params.set('search', searchTerm);
     }
+    return this.http.get<IUsuario[]>(this.apiUrl, { params: params });
+  }
 
-    eliminarUsuario(id: string): Observable<any> {
-        const url = `${this.apiUrl}/${id}`;
-        return this.http.delete<any>(url);
-    }
+  registrarUsuario(usuario: ICrearUsuario): Observable<IUsuario> {
+    return this.http.post<IUsuario>(this.apiUrl, usuario);
+  }
 
-    checkConnection(): Observable<any> {
-        const healthUrl = 'https://backend-biblioteca-u4k0.onrender.com/api/health';
-        return this.http.get(healthUrl);
+  updateUsuario(id: string, cambios: Partial<IUsuario> & { password?: string }): Observable<IUsuario> {
+    return this.http.put<IUsuario>(`${this.apiUrl}/${id}`, cambios);
+  }
+
+  eliminarUsuario(id: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
+
+  checkConnection(): Observable<any> {
+    return this.http.get(this.healthUrl);
   }
 }
