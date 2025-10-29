@@ -67,8 +67,7 @@ export class Prestamos implements OnInit {
       return false;
     }
     
-    const situacion = usuarioSeleccionado.situacion;
-    return situacion === 'Vigente' || situacion === 'Préstamo Activo';
+    return usuarioSeleccionado.situacion === 'Vigente';
   }
 
   registrarPrestamo(): void {
@@ -83,7 +82,18 @@ export class Prestamos implements OnInit {
     }
 
   marcarDevuelto(prestamo: any) {
-    // lógica de edición
+    if (!confirm(`¿Confirmar la devolución del libro "${prestamo.libro.titulo}"?`)) {
+      return;
+    }
+
+    this.prestamoService.eliminarPrestamo(prestamo._id).subscribe({
+      next: () => {
+        this.prestamos = this.prestamos.filter(p => p._id !== prestamo._id);
+
+        this.cargarUsuarios(); 
+      },
+      error: (err) => console.error('Error al devolver el préstamo', err)
+    });
   }
 
   eliminarPrestamo(prestamo: any) {
