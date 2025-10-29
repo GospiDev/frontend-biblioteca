@@ -1,5 +1,6 @@
 <section class="panel">
-  <h2>Gestión de Libros</h2>
+  <h2 *ngIf="esAdmin">Gestión de Libros</h2>
+  <h2 *ngIf="!esAdmin">Buscar Libros</h2>
 
   <div class="busqueda-container">
     <input 
@@ -10,7 +11,7 @@
     <button (click)="cargarLibros()">Buscar</button>
   </div>
 
-  <form class="formulario" (submit)="agregarLibro()">
+  <form class="formulario" *ngIf="esAdmin" (ngsubmit)="agregarLibro()">
     <input type="text" placeholder="Título" [(ngModel)]="nuevoLibro.titulo" name="titulo" required />
     <input type="text" placeholder="Autor" [(ngModel)]="nuevoLibro.autor" name="autor" required />
     <input type="text" placeholder="Género" [(ngModel)]="nuevoLibro.genero" name="genero" />
@@ -25,7 +26,7 @@
         <th>Autor</th>
         <th>Género</th>
         <th>Año</th>
-        <th>Acciones</th>
+        <th *ngIf="esAdmin">Acciones</th>
       </tr>
     </thead>
     <tbody>
@@ -34,7 +35,7 @@
         <td>{{ libro.autor }}</td>
         <td>{{ libro.genero }}</td>
         <td>{{ libro.ano }}</td>
-        <td>
+        <td *ngIf="esAdmin">
           <button (click)="editarLibro(libro)">Editar</button>
           <button (click)="eliminarLibro(libro)">Eliminar</button>
         </td>

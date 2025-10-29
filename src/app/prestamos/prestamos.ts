@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
+import { AuthService } from '../services/auth.service';
 import { PrestamoService } from '../prestamos/prestamo.service';
 import { LibroService } from '../libros/libro.service';
 import { UsuarioService } from '../usuarios/usuario.service';
@@ -28,24 +29,34 @@ export class Prestamos implements OnInit {
     fechaPrestamo: null,
     fechaDevolucion: null
   };
+  esAdmin: boolean = false;
+  miId: string | null = null;
 
   constructor(private prestamoService: PrestamoService, 
     private libroService: LibroService,
-    private usuarioService: UsuarioService) {}
+    private usuarioService: UsuarioService,
+    private authService: AuthService) {}
   
   ngOnInit(): void {
+    this.esAdmin = (this.authService.getRole() === 'Admin');
+    this.miId = this.authService.getUserId();
     this.cargarPrestamos();
-    this.cargarLibros();
-    this.cargarUsuarios();
+    if (this.esAdmin) {
+      this.cargarLibros();
+      this.cargarUsuarios();
+    }
   }
 
   cargarPrestamos(): void {
     this.prestamoService.getPrestamos().subscribe({
       next: (data) => {
-        this.prestamos = data;
-        console.log('Prestamos cargados exitosamente:', this.prestamos);
+        if (this.esAdmin) {
+          this.prestamos = data;
+        } else {
+          this.prestamos = data.filter(prestamo => prestamo.usuario._id === this.miId);
+        }
       },
-      error: (err) => console.error('Error al cargar Prestamos:', err)
+      error: (err) => console.error('Error al cargar Prestamos', err)
     });
   }
 

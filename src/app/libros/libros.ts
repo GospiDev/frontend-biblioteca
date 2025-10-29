@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LibroService } from '../libros/libro.service';
 import { ILibro } from '../interfaces/libro.interfaces';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-libros',
@@ -20,10 +21,12 @@ export class Libros implements OnInit {
     ano: null
   };
   terminoBusqueda: string = '';
+  esAdmin: boolean = false;
   
-  constructor(private libroService: LibroService) {}
+  constructor(private libroService: LibroService, private authService: AuthService) {}
 
   ngOnInit(): void {
+    this.esAdmin = (this.authService.getRole() === 'Admin');
     this.cargarLibros();
   }
 

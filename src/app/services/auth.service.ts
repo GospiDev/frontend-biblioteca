@@ -104,4 +104,8 @@ export class AuthService {
   getRole(): 'Admin' | 'Usuario' | null {
     return this.userRole.value;
   }
+
+  getUserId(): string | null {
+    return this.userId.value;
+  }
 }
