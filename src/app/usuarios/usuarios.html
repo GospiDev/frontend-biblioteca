@@ -36,7 +36,8 @@
         <td>
           <span [class.vigente]="usuario.situacion === 'Vigente'" 
                 [class.atrasado]="usuario.situacion === 'Atrasado'"
-                [class.bloqueado]="usuario.situacion === 'Bloqueado'">
+                [class.bloqueado]="usuario.situacion === 'Bloqueado'"
+                [class.prestamoActivo]="usuario.situacion === 'Prestamo Activo'">
             {{ usuario.situacion }}
         </span>
         </td>

@@ -3,5 +3,5 @@ export interface IUsuario {
   nombre: string;
   correo: string;
   rut: string;
-  situacion: 'Vigente' | 'Atrasado' | 'Bloqueado' | 'Préstamo Activo';
+  situacion: 'Vigente' | 'Atrasado' | 'Bloqueado' | 'Prestamo Activo';
 }
