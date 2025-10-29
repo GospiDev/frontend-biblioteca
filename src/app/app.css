@@ -36,6 +36,13 @@ nav a:hover, nav a.activo {
 }
 
 /* Estado de la conexión */
+.connection-status {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 1001; /* Se asegura de que esté sobre todo */
+}
+
 .connection-status span {
   padding: 8px 12px;
   border-radius: 20px;

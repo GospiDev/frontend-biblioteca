@@ -1,3 +1,9 @@
+<div class="connection-status">
+  <span [class]="isConnected ? 'connected' : 'disconnected'">
+    {{ isConnected ? '✅ Conectado' : '❌ Desconectado' }}
+  </span>
+</div>
+
 <div class="container" *ngIf="authService.isLoggedIn$ | async">
   <header class="header">
     <h1>{{ title }}</h1>
@@ -15,12 +21,6 @@
       
       <a (click)="logout()">Cerrar Sesión</a>
     </nav>     
-
-    <div class="connection-status">
-        <span [class]="isConnected ? 'connected' : 'disconnected'">
-          {{ isConnected ? '✅ Conectado' : '❌ Desconectado' }}
-        </span>
-    </div>
   </header>
 
   <main>
