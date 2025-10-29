@@ -38,6 +38,7 @@ export class UsuarioService {
     }
 
     checkConnection(): Observable<any> {
-        return this.http.get(`${this.apiUrl}/health`);
-    }
+        const healthUrl = 'https://backend-biblioteca-u4k0.onrender.com/api/health';
+        return this.http.get(healthUrl);
+  }
 }
