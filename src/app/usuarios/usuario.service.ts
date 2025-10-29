@@ -22,6 +22,10 @@ export class UsuarioService {
     return this.http.get<IUsuario[]>(this.apiUrl, { params: params });
   }
 
+  getUsuarioById(id: string): Observable<IUsuario> {
+    return this.http.get<IUsuario>(`${this.apiUrl}/${id}`);
+  }
+
   registrarUsuario(usuario: ICrearUsuario): Observable<IUsuario> {
     return this.http.post<IUsuario>(this.apiUrl, usuario);
   }

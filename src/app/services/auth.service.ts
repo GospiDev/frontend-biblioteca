@@ -5,6 +5,9 @@ import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import { jwtDecode } from 'jwt-decode';
 
+import { UsuarioService } from '../usuarios/usuario.service';
+import { IUsuario } from '../interfaces/usuario.interfaces';
+
 interface JwtPayload {
   id: string;
   rol: 'Admin' | 'Usuario';
@@ -20,13 +23,17 @@ export class AuthService {
   
   private loggedIn = new BehaviorSubject<boolean>(this.hasToken());
   private userRole = new BehaviorSubject<'Admin' | 'Usuario' | null>(null);
+  private userId = new BehaviorSubject<string | null>(null);
+  private currentUser = new BehaviorSubject<IUsuario | null>(null);
+  public currentUser$ = this.currentUser.asObservable();
 
   isLoggedIn$ = this.loggedIn.asObservable();
   role$ = this.userRole.asObservable();
 
   constructor(
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private usuarioService: UsuarioService
   ) {
     this.checkTokenAndSetRole();
   }
@@ -39,6 +46,10 @@ export class AuthService {
         if (decoded.exp * 1000 > Date.now()) {
           this.loggedIn.next(true);
           this.userRole.next(decoded.rol);
+          this.userId.next(decoded.id);
+
+          this.fetchAndSetCurrentUser(decoded.id);
+
         } else {
           this.logout();
         }
@@ -52,6 +63,18 @@ export class AuthService {
     return !!localStorage.getItem('token');
   }
 
+  private fetchAndSetCurrentUser(id: string) {
+    this.usuarioService.getUsuarioById(id).subscribe({
+      next: (usuario) => {
+        this.currentUser.next(usuario);
+      },
+      error: (err) => {
+        console.error("No se pudo cargar la info del usuario, cerrando sesión.", err);
+        this.logout(); 
+      }
+    });
+  }
+
   login(loginIdentifier: string, password: string) {
     
     return this.http.post<{ token: string }>(`${this.apiUrl}/login`, { loginIdentifier, password })
@@ -61,7 +84,10 @@ export class AuthService {
           const decoded = jwtDecode<JwtPayload>(response.token);
           this.loggedIn.next(true);
           this.userRole.next(decoded.rol);
+          this.userId.next(decoded.id);
           this.router.navigate(['/libros']);
+
+          this.fetchAndSetCurrentUser(decoded.id);
         })
       );
   }
@@ -70,6 +96,8 @@ export class AuthService {
     localStorage.removeItem('token');
     this.loggedIn.next(false);
     this.userRole.next(null);
+    this.userId.next(null);
+    this.currentUser.next(null);
     this.router.navigate(['/login']);
   }
   

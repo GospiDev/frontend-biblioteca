@@ -16,6 +16,49 @@
   grid-column: 2;
 }
 
+.user-info-widget {
+  grid-column: 3;
+  justify-self: end;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  color: #FFFFFF;
+}
+
+.user-info-widget .user-name {
+  font-weight: 600;
+  font-size: 1.1em;
+}
+
+.user-info-widget .user-role {
+  font-size: 0.9em;
+  font-style: italic;
+  opacity: 0.8;
+}
+
+.user-info-widget .user-status {
+  font-size: 0.8em;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-top: 4px;
+  color: #FFFFFF;
+  text-align: center;
+}
+
+.user-status[data-situacion="Vigente"] {
+  background-color: #10B981;
+}
+.user-status[data-situacion="Prestamo Activo"] {
+  background-color: #3B82F6;
+}
+.user-status[data-situacion="Atrasado"] {
+  background-color: #F59E0B;
+}
+.user-status[data-situacion="Bloqueado"] {
+  background-color: #EF4444;
+}
+
 nav a {
   color: #FFFFFF;
   text-decoration: none;
