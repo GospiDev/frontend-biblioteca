@@ -19,6 +19,7 @@ export class Usuarios implements OnInit {
     rut: '',
   };
   terminoBusqueda: string = '';
+  usuarioSeleccionado: IUsuario | null = null;
 
   constructor(private usuarioService: UsuarioService) {}
 
@@ -56,7 +57,30 @@ export class Usuarios implements OnInit {
       error: (err) => console.error('Error al actualizar la situación', err)
     });
   }
-  
+
+  abrirModalEditar(usuario: IUsuario): void {
+    this.usuarioSeleccionado = { ...usuario };
+  }
+  cerrarModal(): void {
+    this.usuarioSeleccionado = null;
+  }
+  guardarCambios(): void {
+    if (!this.usuarioSeleccionado) return;
+
+    this.usuarioService.updateUsuario(this.usuarioSeleccionado._id, this.usuarioSeleccionado).subscribe({
+      next: (usuarioActualizado) => {
+        const index = this.usuarios.findIndex(u => u._id === usuarioActualizado._id);
+        
+        if (index !== -1) {
+          this.usuarios[index] = usuarioActualizado;
+        }
+        
+        this.cerrarModal();
+      },
+      error: (err) => console.error('Error al guardar los cambios', err)
+    });
+  }
+
   editarUsuario(usuario: any) {
     // lógica de edición
   }
