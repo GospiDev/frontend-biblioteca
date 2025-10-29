@@ -33,7 +33,11 @@ export class UsuarioService {
     }
 
     eliminarUsuario(id: string): Observable<any> {
-    const url = `${this.apiUrl}/${id}`;
-    return this.http.delete<any>(url);
+        const url = `${this.apiUrl}/${id}`;
+        return this.http.delete<any>(url);
+    }
+
+    checkConnection(): Observable<any> {
+        return this.http.get(`${this.apiUrl}/health`);
     }
 }
