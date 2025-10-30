@@ -164,22 +164,26 @@
 }
 
 .modal-content {
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  
   background-color: #FFFFFF;
   color: #333;
-  padding: 25px;
   border-radius: 12px;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
   width: 100%;
   max-width: 500px;
+  overflow: hidden; 
 }
 
 .modal-header {
+  flex-shrink: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #e0e0e0;
-  padding-bottom: 15px;
-  margin-bottom: 20px;
+  padding: 25px;
 }
 
 .modal-header h2 {
@@ -193,6 +197,12 @@
   font-size: 30px;
   cursor: pointer;
   color: #888;
+}
+
+.modal-body {
+  overflow-y: auto;
+  flex-grow: 1; 
+  padding: 20px 25px;
 }
 
 .modal-body .form-group {
@@ -217,10 +227,12 @@
 }
 
 .modal-footer {
+  flex-shrink: 0;
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  margin-top: 25px;
+  border-top: 1px solid #e0e0e0; 
+  padding: 20px 25px;
 }
 
 .modal-footer button {
@@ -248,6 +260,8 @@
 .btn-guardar:hover {
   background-color: #333;
 }
+
+/**/
 
 .mensaje-error-prestamo {
   color: #EF4444;
