@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ILibro } from '../interfaces/libro.interfaces';
+import { ILibro, ICrearLibro } from '../interfaces/libro.interfaces';
 @Injectable({
   providedIn: 'root'
 })
@@ -18,13 +18,12 @@ export class LibroService {
     return this.http.get<ILibro[]>(this.apiUrl, { params: params });
   }
 
-  agregarLibro(libro: ILibro): Observable<ILibro> {
+  agregarLibro(libro: ICrearLibro): Observable<ILibro> {
     return this.http.post<ILibro>(this.apiUrl, libro);
   }
 
-  actualizarLibro(id: string, libro: ILibro): Observable<ILibro> {
-    const url = `${this.apiUrl}/${id}`;
-    return this.http.put<ILibro>(url, libro);
+  actualizarLibro(id: string, cambios: Partial<ILibro>): Observable<ILibro> {
+    return this.http.put<ILibro>(`${this.apiUrl}/${id}`, cambios);
   }
 
   eliminarLibro(id: string): Observable<any> {

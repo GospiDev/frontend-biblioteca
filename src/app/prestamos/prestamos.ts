@@ -67,6 +67,10 @@ export class Prestamos implements OnInit {
     this.usuarioService.getUsuarios().subscribe(data => this.usuarios = data);
   }
 
+  get librosDisponibles(): ILibro[] {
+    return this.libros.filter(l => l.cantidad > 0);
+  }
+
   get usuarioSeleccionado(): IUsuario | undefined {
     if (!this.nuevoPrestamo.usuario) {
       return undefined;

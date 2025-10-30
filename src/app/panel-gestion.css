@@ -264,3 +264,14 @@
   text-align: center;
   font-weight: 500;
 }
+
+/**/
+
+.disponible {
+  color: #10B981;
+  font-weight: 600;
+}
+.agotado {
+  color: #EF4444;
+  font-weight: 600;
+}

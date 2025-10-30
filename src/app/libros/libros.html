@@ -16,6 +16,7 @@
     <input type="text" placeholder="Autor" [(ngModel)]="nuevoLibro.autor" name="autor" required />
     <input type="text" placeholder="Género" [(ngModel)]="nuevoLibro.genero" name="genero" />
     <input type="number" placeholder="Año" [(ngModel)]="nuevoLibro.ano" name="ano" />
+    <input type="number" placeholder="Copias" [(ngModel)]="nuevoLibro.cantidad" name="cantidad" />
     <button type="submit">Agregar Libro</button>
   </form>
 
@@ -26,6 +27,7 @@
         <th>Autor</th>
         <th>Género</th>
         <th>Año</th>
+        <th>Disponibles</th>
         <th *ngIf="esAdmin">Acciones</th>
       </tr>
     </thead>
@@ -35,6 +37,13 @@
         <td>{{ libro.autor }}</td>
         <td>{{ libro.genero }}</td>
         <td>{{ libro.ano }}</td>
+        <td>{{ libro.cantidad }}</td>
+        <td>
+          <span [class.disponible]="libro.cantidad > 0" 
+                [class.agotado]="libro.cantidad === 0">
+            {{ libro.cantidad > 0 ? 'Disponible' : 'Agotado' }}
+          </span>
+        </td>
         <td *ngIf="esAdmin">
           <button (click)="editarLibro(libro)">Editar</button>
           <button (click)="eliminarLibro(libro)">Eliminar</button>
