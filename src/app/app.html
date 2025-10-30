@@ -15,10 +15,12 @@
         <a routerLink="/libros" routerLinkActive="activo">Gestión Libros</a>
         <a routerLink="/usuarios" routerLinkActive="activo">Gestión Usuarios</a>
         <a routerLink="/prestamos" routerLinkActive="activo">Gestión Préstamos</a>
+        <a routerLink="/historial" routerLinkActive="activo">Historial</a>
       </ng-container>
       <ng-container *ngIf="role === 'Usuario'">
         <a routerLink="/libros" routerLinkActive="activo">Buscar Libros</a>
         <a routerLink="/prestamos" routerLinkActive="activo">Mis Préstamos</a>
+        <a routerLink="/historial" routerLinkActive="activo">Mi Historial</a>
       </ng-container>
       <a (click)="logout()">Cerrar Sesión</a>
     </nav>     

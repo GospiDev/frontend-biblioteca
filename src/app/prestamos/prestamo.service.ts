@@ -15,6 +15,10 @@ export class PrestamoService {
     return this.http.get<IPrestamo[]>(this.apiUrl);
   }
 
+  getHistorial(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/historial`);
+  }
+
   registrarPrestamo(prestamo: ICrearPrestamo): Observable<IPrestamo> {
     return this.http.post<IPrestamo>(this.apiUrl, prestamo);
   }
@@ -27,5 +31,9 @@ export class PrestamoService {
   eliminarPrestamo(id: string): Observable<any> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.delete<any>(url);
+  }
+
+  borrarPrestamoPorError(id: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/corregir/${id}`);
   }
 }

@@ -122,14 +122,19 @@ export class Prestamos implements OnInit {
     });
   }
 
-  eliminarPrestamo(prestamo: any) {
-    if (confirm(`¿Estás seguro de que deseas eliminar "${prestamo.titulo}"?`)) {
-      this.prestamoService.eliminarPrestamo(prestamo._id).subscribe({
-        next: () => {
-          this.prestamos = this.prestamos.filter(l => l._id !== prestamo._id);
-        },
-        error: (err) => console.error('Error al eliminar el prestamo:', err)
-      });
+  eliminarPrestamo(prestamo: IPrestamo): void {
+    if (!confirm(`¿ELIMINAR el préstamo de "${prestamo.libro.titulo}"? (Esta acción es para corregir errores y NO se guardará en el historial)`)) {
+      return;
     }
+
+    this.prestamoService.borrarPrestamoPorError(prestamo._id).subscribe({
+      next: () => {
+        this.prestamos = this.prestamos.filter(p => p._id !== prestamo._id);
+        this.cargarUsuarios(); 
+        this.cargarLibros();
+      },
+      error: (err: any) => console.error('Error al eliminar el préstamo', err)
+    });
   }
+
 }

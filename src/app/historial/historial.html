@@ -1,0 +1,23 @@
+<section class="panel">
+  <h2 *ngIf="esAdmin">Historial de Préstamos</h2>
+  <h2 *ngIf="!esAdmin">Mi Historial de Préstamos</h2>
+
+  <table class="tabla">
+    <thead>
+      <tr>
+        <th *ngIf="esAdmin">Usuario</th>
+        <th>Libro</th>
+        <th>Fecha de Préstamo</th>
+        <th>Fecha de Devolución</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of historial">
+        <td *ngIf="esAdmin">{{ item.usuario.nombre }}</td>
+        <td>{{ item.libro.titulo }}</td>
+        <td>{{ item.fechaPrestamo | date:'shortDate' }}</td>
+        <td>{{ item.fechaDevolucion | date:'shortDate' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
