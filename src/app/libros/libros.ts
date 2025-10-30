@@ -53,10 +53,6 @@ export class Libros implements OnInit {
   }
 
   editarLibro(libro: ILibro): void {
-    console.log('Editando:', libro);
-  }
-
-  abrirModalEditar(libro: ILibro): void {
     this.libroSeleccionado = { ...libro };
   }
 
