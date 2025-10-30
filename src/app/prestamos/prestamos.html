@@ -4,16 +4,16 @@
 
   <form class="formulario" *ngIf="esAdmin" (ngSubmit)="registrarPrestamo()">
     
-    <select [(ngModel)]="nuevoPrestamo.libro" name="libro" required>
-      <option value="" disabled>Selecciona un libro</option>
-      <option *ngFor="let libro of librosDisponibles" [value]="libro._id">
-        {{ libro.titulo }} ({{ libro.autor }})
+    <select [(ngModel)]="nuevoPrestamo.usuario" name="usuario" required>
+      <option value="" disabled>Selecciona un usuario</option>
+      <option *ngFor="let user of usuarios" [value]="user._id">
+        {{ user.nombre }} ({{ user.correo }})
       </option>
     </select>
 
     <select [(ngModel)]="nuevoPrestamo.libro" name="libro" required>
       <option value="" disabled>Selecciona un libro</option>
-      <option *ngFor="let libro of libros" [value]="libro._id">
+      <option *ngFor="let libro of librosDisponibles" [value]="libro._id">
         {{ libro.titulo }} ({{ libro.autor }})
       </option>
     </select>
