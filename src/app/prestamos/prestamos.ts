@@ -105,20 +105,20 @@ export class Prestamos implements OnInit {
       });
     }
 
-  marcarDevuelto(prestamo: any) {
-    if (!confirm(`¿Confirmar la devolución del libro "${prestamo.libro.titulo}"?`)) {
+  marcarDevuelto(prestamo: IPrestamo): void {
+    const observacion = window.prompt('Añadir observación sobre la devolución (opcional):');
+
+    if (observacion === null) {
       return;
     }
 
-    this.prestamoService.eliminarPrestamo(prestamo._id).subscribe({
+    this.prestamoService.marcarDevuelto(prestamo._id, observacion).subscribe({
       next: () => {
         this.prestamos = this.prestamos.filter(p => p._id !== prestamo._id);
-
         this.cargarUsuarios(); 
         this.cargarLibros();
-
       },
-      error: (err) => console.error('Error al devolver el préstamo', err)
+      error: (err: any) => console.error('Error al devolver el préstamo', err)
     });
   }
 
@@ -127,7 +127,7 @@ export class Prestamos implements OnInit {
       return;
     }
 
-    this.prestamoService.borrarPrestamoPorError(prestamo._id).subscribe({
+    this.prestamoService.eliminarPrestamo(prestamo._id).subscribe({
       next: () => {
         this.prestamos = this.prestamos.filter(p => p._id !== prestamo._id);
         this.cargarUsuarios(); 
@@ -137,4 +137,30 @@ export class Prestamos implements OnInit {
     });
   }
 
+  calcularEstadoPrestamo(fechaDevolucionISO: string | Date | undefined): string {
+    if (!fechaDevolucionISO) {
+      return '';
+    }
+    
+    const hoy = new Date();
+    const fechaEntrega = new Date(fechaDevolucionISO);
+    
+    hoy.setHours(0, 0, 0, 0);
+    fechaEntrega.setHours(0, 0, 0, 0);
+    
+    const diffTime = fechaEntrega.getTime() - hoy.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays < 0) {
+      return `Atrasado por ${Math.abs(diffDays)} día(s)`;
+    }
+    if (diffDays === 0) {
+      return '¡Entrega hoy!';
+    }
+    if (diffDays <= 3) { 
+      return `Faltan ${diffDays} día(s)`;
+    }
+    
+    return 'En plazo';
+  }
 }

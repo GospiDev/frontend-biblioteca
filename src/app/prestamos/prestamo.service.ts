@@ -23,17 +23,11 @@ export class PrestamoService {
     return this.http.post<IPrestamo>(this.apiUrl, prestamo);
   }
 
-  marcarDevuelto(id: string, prestamo: IPrestamo): Observable<IPrestamo> {
-    const url = `${this.apiUrl}/${id}`;
-    return this.http.put<IPrestamo>(url, prestamo);
+  marcarDevuelto(id: string, observacion: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/devolver/${id}`, { observaciones: observacion });
   }
 
-  eliminarPrestamo(id: string): Observable<any> {
-    const url = `${this.apiUrl}/${id}`;
-    return this.http.delete<any>(url);
-  }
-
-  borrarPrestamoPorError(id: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/corregir/${id}`);
+    eliminarPrestamo(id: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/eliminar/${id}`);
   }
 }

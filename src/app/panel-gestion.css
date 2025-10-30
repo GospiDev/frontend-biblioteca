@@ -1,4 +1,3 @@
-/* Estilo principal para el panel de gestión */
 .panel {
   background-color: #FFFFFF;
   color: #333333;
@@ -15,27 +14,26 @@
   padding-bottom: 15px;
 }
 
-/* Estilo para el formulario de agregado */
 .formulario {
   display: flex;
-  flex-wrap: wrap; /* Permite que los elementos pasen a la siguiente línea si no caben */
-  gap: 15px; /* Espacio entre los campos del formulario */
+  flex-wrap: wrap;
+  gap: 15px;
   margin-bottom: 30px;
 }
 
 .formulario input {
-  flex: 1; /* Hace que los inputs crezcan para ocupar el espacio disponible */
-  min-width: 150px; /* Ancho mínimo antes de pasar a la siguiente línea */
+  flex: 1; 
+  min-width: 150px;
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 8px;
   font-size: 15px;
-  font-family: inherit; /* Usa la fuente global que definimos */
+  font-family: inherit;
 }
 
 .formulario input:focus {
   outline: none;
-  border-color: #F97316; /* Naranja para el foco, como en el login */
+  border-color: #F97316;
   box-shadow: 0 0 5px rgba(249, 115, 22, 0.5);
 }
 
@@ -55,10 +53,9 @@
   background-color: #333;
 }
 
-/* Estilo para la tabla de datos */
 .tabla {
   width: 100%;
-  border-collapse: collapse; /* Une los bordes de las celdas */
+  border-collapse: collapse;
 }
 
 .tabla th, .tabla td {
@@ -76,10 +73,9 @@
 }
 
 .tabla tbody tr:hover {
-  background-color: #f9f9f9; /* Un gris muy claro al pasar el mouse */
+  background-color: #f9f9f9;
 }
 
-/* Estilos para los botones de acciones dentro de la tabla */
 .tabla td button {
   padding: 8px 12px;
   margin-right: 8px;
@@ -96,9 +92,8 @@
   background-color: #e0e0e0;
 }
 
-/* Opcional: Colores específicos para botones de editar/eliminar */
 .tabla td button:last-child:hover {
-  background-color: #EF4444; /* Rojo al pasar el mouse sobre Eliminar */
+  background-color: #EF4444;
   border-color: #EF4444;
   color: #FFFFFF;
 }
@@ -122,7 +117,7 @@
   padding: 12px 20px;
   border: none;
   border-radius: 8px;
-  background-color: #555; /* Un gris neutro */
+  background-color: #555;
   color: #FFFFFF;
   font-size: 15px;
   font-weight: 600;
@@ -265,7 +260,7 @@
   font-weight: 500;
 }
 
-/**/
+/*DISPONIBILIDAD DE LIBROS*/
 
 .disponible {
   color: #10B981;
@@ -274,4 +269,40 @@
 .agotado {
   color: #EF4444;
   font-weight: 600;
+}
+
+/*ALERTA DE FECHA PRESTAMO*/
+
+.alerta-prestamo[data-estado*="Atrasado"] {
+  color: #EF4444;
+  font-weight: 600;
+}
+.alerta-prestamo[data-estado*="Faltan"],
+.alerta-prestamo[data-estado*="¡Entrega hoy!"] {
+  color: #F59E0B;
+  font-weight: 600;
+}
+.alerta-prestamo[data-estado="En plazo"] {
+  color: #10B981;
+}
+
+.entrega-a-tiempo {
+  color: #10B981;
+}
+.entrega-atrasada {
+  color: #EF4444;
+}
+
+/*ESTILOS DE USUARIOS*/
+
+.user-info-widget .user-role {
+  font-size: 0.9em;
+  font-style: italic;
+  opacity: 0.8;
+}
+
+.user-info-widget .user-cargo {
+  font-size: 0.9em;
+  opacity: 0.8;
+  font-weight: 500;
 }

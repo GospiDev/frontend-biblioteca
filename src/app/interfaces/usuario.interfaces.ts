@@ -1,3 +1,5 @@
+type CargoUsuario = 'Estudiante' | 'Docente' | 'Bibliotecario';
+
 export interface IUsuario {
   _id: string;
   nombre: string;
@@ -5,6 +7,7 @@ export interface IUsuario {
   rut: string;
   situacion: 'Vigente' | 'Atrasado' | 'Bloqueado' | 'Prestamo Activo';
   rol: 'Admin' | 'Usuario';
+  cargo: CargoUsuario;
 }
 
 export interface ICrearUsuario {
@@ -13,4 +16,5 @@ export interface ICrearUsuario {
   rut: string;
   rol: 'Admin' | 'Usuario';
   password: string;
+  cargo: CargoUsuario;
 }

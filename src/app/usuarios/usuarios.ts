@@ -18,7 +18,8 @@ export class Usuarios implements OnInit {
     correo: '',
     rut: '',
     rol: 'Usuario',
-    password: ''
+    password: '',
+    cargo: 'Estudiante'
   };
   terminoBusqueda: string = '';
   usuarioSeleccionado: IUsuario | null = null;
@@ -49,7 +50,8 @@ export class Usuarios implements OnInit {
           correo: '',
           rut: '',
           rol: 'Usuario',
-          password: ''
+          password: '',
+          cargo: 'Estudiante'
         };
       },
       error: (err) => console.error('Error al registrar el usuario', err)

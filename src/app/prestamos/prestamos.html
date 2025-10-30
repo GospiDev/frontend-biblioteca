@@ -34,6 +34,7 @@
         <th>Libro</th>
         <th>Préstamo</th>
         <th>Devolución</th>
+        <th>Alerta</th>
         <th *ngIf="esAdmin">Acciones</th>
       </tr>
     </thead>
@@ -45,7 +46,14 @@
         
         <td>{{ prestamo.fechaPrestamo | date:'shortDate' }}</td>
         <td>{{ prestamo.fechaDevolucion | date:'shortDate' }}</td>
-        
+
+        <td>
+          <span class="alerta-prestamo" 
+                [attr.data-estado]="calcularEstadoPrestamo(prestamo.fechaDevolucion)">
+            {{ calcularEstadoPrestamo(prestamo.fechaDevolucion) }}
+          </span>
+        </td>
+
         <td *ngIf="esAdmin">
           <button (click)="marcarDevuelto(prestamo)">Marcar devuelto</button>
           <button (click)="eliminarPrestamo(prestamo)">Eliminar</button>

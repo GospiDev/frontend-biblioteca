@@ -28,6 +28,7 @@
     <div class="user-info-widget" *ngIf="authService.currentUser$ | async as user">
       <span class="user-name">{{ user.nombre }}</span>
       <span class="user-role">{{ user.rol }}</span>
+      <span class="user-cargo">{{ user.cargo }}</span>
       <span class="user-status" [attr.data-situacion]="user.situacion">
         {{ user.situacion }}
       </span>
