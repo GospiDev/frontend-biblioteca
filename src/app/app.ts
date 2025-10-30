@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLinkWithHref, RouterOutlet } from '@angular/router';
 import { AuthService } from './services/auth.service';
-import { UsuarioService } from './usuarios/usuario.service'; // (El nuevo, con 'o')
+import { UsuarioService } from './usuarios/usuario.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterLinkWithHref], // Quitamos FormsModule
+  imports: [CommonModule, RouterOutlet, RouterLinkWithHref],
   templateUrl: './app.html',
   styleUrls: ['./app.css']
 })
@@ -16,8 +16,8 @@ export class App implements OnInit {
   isConnected = false;
 
   constructor(
-    public authService: AuthService, // Para el HTML y logout
-    private usuarioService: UsuarioService // Para el checkConnection
+    public authService: AuthService,
+    private usuarioService: UsuarioService
   ) {}
 
   ngOnInit() {

@@ -69,18 +69,16 @@ nav a {
   cursor: pointer;
 }
 
-/* Estilo para el enlace activo y al pasar el mouse */
 nav a:hover, nav a.activo {
   background-color: #FFFFFF;
-  color: #F97316; /* El color del fondo se vuelve el color del texto */
+  color: #F97316; 
 }
 
-/* Estado de la conexión */
 .connection-status {
   position: fixed;
   bottom: 10px;
   right: 10px;
-  z-index: 1001; /* Se asegura de que esté sobre todo */
+  z-index: 1001; 
 }
 
 .connection-status span {
@@ -90,14 +88,13 @@ nav a:hover, nav a.activo {
 }
 
 .connection-status .connected {
-  background-color: #10B981; /* Verde */
+  background-color: #10B981;
 }
 
 .connection-status .disconnected {
-  background-color: #EF4444; /* Rojo */
+  background-color: #EF4444;
 }
 
-/* Estilos para el contenedor del contenido principal */
 main {
   padding: 30px;
 }
