@@ -96,6 +96,9 @@ export class Prestamos implements OnInit {
         next: (prestamoGuardado) => {
           this.prestamos.push(prestamoGuardado); 
           
+          this.cargarUsuarios();
+          this.cargarLibros();
+
           this.nuevoPrestamo = { usuario: '', libro: '', fechaPrestamo: null, fechaDevolucion: null };
         },
         error: (err) => console.error('Error al registrar el prestamo', err)
@@ -112,6 +115,8 @@ export class Prestamos implements OnInit {
         this.prestamos = this.prestamos.filter(p => p._id !== prestamo._id);
 
         this.cargarUsuarios(); 
+        this.cargarLibros();
+
       },
       error: (err) => console.error('Error al devolver el préstamo', err)
     });
